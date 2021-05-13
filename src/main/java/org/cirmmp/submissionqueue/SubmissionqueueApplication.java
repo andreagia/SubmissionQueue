@@ -1,0 +1,13 @@
+package org.cirmmp.submissionqueue;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SubmissionqueueApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(SubmissionqueueApplication.class, args);
+    }
+
+}
