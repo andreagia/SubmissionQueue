@@ -13,7 +13,7 @@ tar xvfz in.tgz
 #AMBER_COMMAND
 $RUN -O -i sander0.in -o sander0.out -p prmtop -c prmcrd -r sander0.crd -ref  prmcrd
 $AMBERHOME/bin/ambpdb -p prmtop -c sander0.crd > amber_final0.pdb
-perl gettensor.pl sander0.out
+#perl gettensor.pl sander0.out
 $RUN -O -i sander1.in -o sander1.out -p prmtop -c sander0.crd -r sander1.crd -ref  sander0.crd
 $AMBERHOME/bin/ambpdb -p prmtop -c sander1.crd > amber_final1.pdb
 $RUN -O -i sander2.in -o sander2.out -p prmtop -c sander1.crd -r sander2.crd -ref  sander1.crd

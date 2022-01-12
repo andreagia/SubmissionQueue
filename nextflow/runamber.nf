@@ -1,8 +1,11 @@
+#!/usr/bin/env nextflow
 
 run = Channel.fromPath("run_amber.sh")
 intgz = Channel.fromPath("in.tgz")
-process sayHello {
+process run_amber {
+    publishDir "./output", mode: 'move'
     echo true
+    tag #REPLACETAG#
     container="andreagia/ambertoolsmpi"
     executor 'condor'
     cpus 8
@@ -10,14 +13,11 @@ process sayHello {
     file "run_amber.sh" from run
     file "in.tgz" from intgz
     output:
-    file('*') into result
+    file "pro.tgz"
+    //file('*') into result
 
     """
-    #echo 'Hello world!' > file
-    #ls -h ./  > pino
-    #pwd > pino2
-    sh ./run_amber.sh > out
+    sh ./run_amber.sh
     """
 
 }
-result.println()

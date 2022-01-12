@@ -35,16 +35,16 @@ public class RunCommandLocalImpl implements RunCommandLocal{
 
 
         //instert tag to nextflow
-        Path nextflowt = Paths.get(job.getDirectory()+"/tutorial.nf.t");
-        Path nextflow = Paths.get(job.getDirectory()+"/tutorial.nf");
-        try (Stream<String> lines = Files.lines(nextflowt)) {
+        //Path nextflowt = Paths.get(job.getDirectory()+"/tutorial.nf.t");
+        Path nextflow = Paths.get(job.getDirectory()+"/"+job.getExec());
+        try (Stream<String> lines = Files.lines(nextflow)) {
             List<String> replaced = lines
                     .map(line-> line.replaceAll("#REPLACETAG#", job.getTag()))
                     .collect(Collectors.toList());
             Files.write(nextflow, replaced);
         }
         //List<String> cmdexe = Arrays.asList(nextflowbin, "-q", "-bg", "run tutorial.nf", "-with-weblog http://localhost:8080");
-        List<String> cmdexe = Arrays.asList(nextflowbin, "-q", "-bg", "run", "tutorial.nf", "-with-weblog", "http://localhost:8080");
+        List<String> cmdexe = Arrays.asList(nextflowbin, "-q", "-bg", "run", job.getExec(), "-with-weblog", "http://10.10.10.1:8080");
         Map<String,String> env = Collections.EMPTY_MAP;
         //env.put("JAVA_HOME",javahome);
         //env.put("PATH", "$JAVA_HOME/bin;$PATH");
