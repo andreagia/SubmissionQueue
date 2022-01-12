@@ -45,6 +45,7 @@ public class RunCommandLocalImpl implements RunCommandLocal{
         }
         //List<String> cmdexe = Arrays.asList(nextflowbin, "-q", "-bg", "run tutorial.nf", "-with-weblog http://localhost:8080");
         List<String> cmdexe = Arrays.asList(nextflowbin, "-q", "-bg", "run", job.getExec(), "-with-weblog", "http://10.10.10.1:8080");
+        logger.info(cmdexe.stream().reduce("",(a,b) -> a.concat(b).concat(" ")));
         Map<String,String> env = Collections.EMPTY_MAP;
         //env.put("JAVA_HOME",javahome);
         //env.put("PATH", "$JAVA_HOME/bin;$PATH");
