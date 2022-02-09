@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.CompletableFuture;
+
 @Component
 public class KafkaListeners {
 
@@ -19,7 +21,7 @@ public class KafkaListeners {
     @KafkaListener(id = "1", topics = "reflectoring-sendjobs", groupId = "reflectoring-sendjobs-mc", containerFactory = "kafkaJsonListenerContainerFactory")
     void listenerWithMessageConverter(Job job) throws Exception {
         LOG.info("MessageConverterUserListener [{}]", job);
-        OutRunCommnad outRunCommnad = runCommandLocal.runjob(job);
+        CompletableFuture<OutRunCommnad> outRunCommnad = runCommandLocal.runjob(job);
         LOG.info("MessageConverterUserListener [{}]", outRunCommnad);
     }
 }

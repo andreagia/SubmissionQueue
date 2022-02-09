@@ -5,7 +5,7 @@ intgz = Channel.fromPath("in.tgz")
 process run_amber {
     publishDir "./output", mode: 'move'
     echo true
-    tag #REPLACETAG#
+    tag = "#REPLACETAG#"
     container="andreagia/ambertoolsmpi"
     executor 'condor'
     cpus 8

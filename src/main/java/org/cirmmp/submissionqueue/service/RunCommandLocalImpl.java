@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -14,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,11 +29,13 @@ public class RunCommandLocalImpl implements RunCommandLocal{
     @Value("${java.home}")
     private String javahome;
 
+
     @Autowired
     private RunCommand runCommand;
 
     @Override
-    public OutRunCommnad runjob(Job job) throws Exception {
+    @Async("asyncExecutor")
+    public CompletableFuture<OutRunCommnad> runjob(Job job) throws Exception {
 
 
         //instert tag to nextflow
@@ -50,6 +54,6 @@ public class RunCommandLocalImpl implements RunCommandLocal{
         //env.put("JAVA_HOME",javahome);
         //env.put("PATH", "$JAVA_HOME/bin;$PATH");
         OutRunCommnad outRunCommnad = runCommand.run(cmdexe, env, new File(job.getDirectory()));
-        return outRunCommnad;
+        return CompletableFuture.completedFuture(outRunCommnad);
     }
 }
